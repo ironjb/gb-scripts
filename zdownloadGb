@@ -1,0 +1,11 @@
+#First log in
+#wget --save-cookies cookies.txt --keep-session-cookies \
+#	--post-data 'uri=%2Faccount%2Flogin_register.jsp&registrationAction=identify&emailAddress=ironjb20%#40gmail.com&password=XXXXXXXXX&submit=Login' \
+#	https://secure.video.theblaze.com/authenticate.do
+
+
+wget --load-cookies cookies.txt \
+	-p http://www.premiereinteractive.com/cgi-bin/members.cgi?type=download_show&stream=2015-02-09&site=glennbeck&clips=1
+
+
+#wget http://podcasts.glennbeck.com/glennbeck/2015/01/Glenn%20Beck%20-%20Jan%2030%202015%20-%20Hour%204.mp3

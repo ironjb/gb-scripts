@@ -1,0 +1,28 @@
+#!/bin/bash
+# *********************************************************************
+# Use the 'bash' command and not the 'sh' command for this script.
+# The 'sh' command does not understand arrays.
+# *********************************************************************
+
+YR="15";
+# rename -v "s/Glenn\ Beck\ -\ Aug\ /${YR}08/" *.mp3 | grep "20${YR}"
+# rename -v "s/Glenn\ Beck\ -\ Sep\ /${YR}09/" *.mp3 | grep "20${YR}"
+# rename -v "s/Glenn\ Beck\ -\ Oct\ /${YR}10/" *.mp3 | grep "20${YR}"
+# rename -v "s/Glenn\ Beck\ -\ Nov\ /${YR}11/" *.mp3 | grep "20${YR}"
+# rename -v "s/Glenn\ Beck\ -\ Dec\ /${YR}12/" *.mp3 | grep "20${YR}"
+
+echo "Remember to use 'bash' and not 'sh' for this script!!!"
+monthArray=( "Jan" "Feb" "Mar" "Apr" "May" "Jun" "Jul" "Aug" "Sep" "Oct" "Nov" "Dec");
+
+for i in ${!monthArray[@]}
+do
+	# echo ${i}
+	month=$(printf "%02d" $((i+1)))
+
+	# echo ${i} ${month} ${monthArray[i]}
+	#rename -v "s/Glenn\ Beck\ -\ ${monthArray[i]}\ /${YR}${month}/" *.mp3 | grep "20${YR}"
+	#find . -maxdepth 1 -type f -regex ".*20$YR.*mp3" | rename -v "s/Glenn\ Beck\ -\ ${monthArray[i]}\ /${YR}${month}/" *.mp3
+	rename -v "s/Glenn\ Beck\ -\ ${monthArray[i]}\ /${YR}${month}/" *\ 20$YR\ *.mp3
+done
+
+rename -v "s/\ 20${YR}\ -\ Hour\ /_Hour/" *\ 20$YR\ *.mp3
