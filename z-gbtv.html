@@ -1,44 +1,103 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
+	<title>GBTV Downloader</title>
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css" integrity="sha384-aUGj/X2zp5rLCbBxumKTCw2Z50WgIr1vs/PFN4praOTvYXWlVyh2UtNUU0KAUhAX" crossorigin="anonymous">
+
+	<script src="//code.jquery.com/jquery-2.1.0.min.js"></script>
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
+
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.min.js"></script>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.3/ui-bootstrap-tpls.min.js"></script>
 	<script>
 function addDays(theDate, days) {
 	return new Date(theDate.getTime() + days*24*60*60*1000);
 }
-var myApp = angular.module('app',[]);
+var myApp = angular.module('app',['ui.bootstrap']);
 myApp.controller('gbtv', ['$scope', function($scope) {
-	var startDate = new Date('10/12/2015');
+	$scope.format = 'shortDate';
+	$scope.startDate = new Date('10/26/2015');
 	$scope.dateArray = [];
-	for (var i = 0; i < 5; i++) {
-		var dt = addDays(startDate, i);
-		var dayString = (dt.getDate().toString().length < 2) ? "0" + dt.getDate().toString() : dt.getDate().toString();
-		var mth = dt.getMonth() + 1;
-		var monthString = (mth.toString().length < 2) ? "0" + mth.toString() : mth.toString();
-		var yearString = dt.getFullYear().toString();
-		var dateInfo = {
-			d: dt,
-			day: dayString,
-			month: monthString,
-			year: yearString,
-			dateLinkFormat: yearString + '-' + monthString + '-' + dayString,
-			downloadFormat: yearString.substring(2) + monthString + dayString,
-		};
-		$scope.dateArray.push(dateInfo);
-	}
-	console.log($scope.dateArray);
+	$scope.status = { opened: false };
+	$scope.dateOptions = {
+		startingDay: 1,
+		showWeeks: false
+	};
+
+	$scope.setDateArray = function() {
+		while ($scope.dateArray.length > 0) {
+			$scope.dateArray.pop();
+		}
+		for (var i = 0; i < 5; i++) {
+			var dt = addDays($scope.startDate, i);
+			var dayString = (dt.getDate().toString().length < 2) ? "0" + dt.getDate().toString() : dt.getDate().toString();
+			var mth = dt.getMonth() + 1;
+			var monthString = (mth.toString().length < 2) ? "0" + mth.toString() : mth.toString();
+			var yearString = dt.getFullYear().toString();
+			var dateInfo = {
+				d: dt,
+				day: dayString,
+				month: monthString,
+				year: yearString,
+				dateLinkFormat: yearString + '-' + monthString + '-' + dayString,
+				downloadFormat: yearString.substring(2) + monthString + dayString,
+			};
+			$scope.dateArray.push(dateInfo);
+		}
+
+	};
+
+	$scope.setDateArray();
+
+	$scope.startDateOpen = function ($event) {
+		$scope.status.opened = true;
+	};
+	// console.log($scope.dateArray);
 }]);
 	</script>
 </head>
 <body>
-	<div data-ng-app="app" data-ng-controller='gbtv'>
-		<div data-ng-repeat="d in dateArray">
-			<strong>{{d.dateLinkFormat}}</strong>
-			<div data-ng-repeat="e in [1,2,3,4]">
-				<!-- Download attribute does not work with this link -->
-				<a target="_blank" href="http://www.premiereinteractive.com/cgi-bin/members.cgi?type=download_show&amp;stream={{d.dateLinkFormat}}&amp;site=glennbeck&amp;clips={{e}}" download="{{d.downloadFormat}}_Hour{{e}}.mp3">#{{e}}</a>
+	<div class="container" data-ng-app="app" data-ng-controller='gbtv'>
+		<h1>GBTV Download Helper</h1>
+		<form class="form-horizontal" data-ng-submit="setDateArray();">
+			<div class="form-group">
+				<label for="startDateTxt" class="control-label col-sm-2">Start Date</label>
+				<div class="col-sm-4">
+					<div class="input-group">
+						<input id="startDateTxt" name="startDateTxt" type="text" class="form-control" data-uib-datepicker-popup="{{format}}" data-is-open="status.opened" data-ng-model="startDate" data-datepicker-options="dateOptions" />
+						<span class="input-group-btn"><button type="button" class="btn btn-default" data-ng-click="startDateOpen($event);"><span class="glyphicon glyphicon-calendar"> </span></button></span>
+					</div>
+				</div>
+				<div class="col-sm-4"><button class="btn btn-primary" type="submit">Update</button></div>
 			</div>
+		</form>
+		<div class="row">
+			<div class="col-sm-2" data-ng-repeat="d in dateArray">
+				<div class="panel panel-primary">
+					<div class="panel-heading">{{d.dateLinkFormat}}</div>
+					<div class="panel-body">
+						<div class="btn-groups text-center">
+							<!-- Download attribute does not work with this link -->
+							<a target="_blank" class="btn btn-sm btn-default" data-ng-repeat="e in [1,2,3,4]" href="http://www.premiereinteractive.com/cgi-bin/members.cgi?type=download_show&amp;stream={{d.dateLinkFormat}}&amp;site=glennbeck&amp;clips={{e}}" download="{{d.downloadFormat}}_Hour{{e}}.mp3">{{e}}</a>
+						</div>
+					</div>
+				</div>
+				<!-- <div class="col-sm-2">
+					<strong>{{d.dateLinkFormat}}</strong>
+				</div>
+				<div class="col-sm-1" data-ng-repeat="e in [1,2,3,4]">
+					<a target="_blank" class="btn btn-default" href="http://www.premiereinteractive.com/cgi-bin/members.cgi?type=download_show&amp;stream={{d.dateLinkFormat}}&amp;site=glennbeck&amp;clips={{e}}" download="{{d.downloadFormat}}_Hour{{e}}.mp3">#{{e}}</a>
+				</div> -->
+			</div>
+			<div class="col-sm-2"></div>
 		</div>
 	</div>
 </body>
