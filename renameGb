@@ -4,7 +4,7 @@
 # The 'sh' command does not understand arrays.
 # *********************************************************************
 
-YR="15";
+YR="16";
 # rename -v "s/Glenn\ Beck\ -\ Aug\ /${YR}08/" *.mp3 | grep "20${YR}"
 # rename -v "s/Glenn\ Beck\ -\ Sep\ /${YR}09/" *.mp3 | grep "20${YR}"
 # rename -v "s/Glenn\ Beck\ -\ Oct\ /${YR}10/" *.mp3 | grep "20${YR}"

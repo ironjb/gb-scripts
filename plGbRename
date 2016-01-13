@@ -1,5 +1,5 @@
 #!/bin/bash
-YR="15"
+YR="16"
 rename -v "s/\ /_/g" *20$YR*.m3u
 rename -v "s/playlist_Glenn_Beck_-_Jan_/pl_gb_${YR}01/" *_20$YR*.m3u
 rename -v "s/playlist_Glenn_Beck_-_Feb_/pl_gb_${YR}02/" *_20$YR*.m3u
