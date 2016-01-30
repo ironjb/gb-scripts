@@ -23,12 +23,16 @@ function addDays(theDate, days) {
 }
 var myApp = angular.module('app',['ui.bootstrap']);
 myApp.controller('gbtv', ['$scope', function($scope) {
+	var currentDate = new Date();
+	var currentDayOfWeek = currentDate.getDay();
+	var mondayOfWeek = addDays(currentDate, 1 - currentDayOfWeek);
+
 	$scope.format = 'shortDate';
-	$scope.startDate = new Date('10/26/2015');
+	$scope.startDate = mondayOfWeek;
 	$scope.dateArray = [];
 	$scope.status = { opened: false };
 	$scope.dateOptions = {
-		startingDay: 1,
+		// startingDay: 1,
 		showWeeks: false
 	};
 
