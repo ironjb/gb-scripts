@@ -11,7 +11,7 @@ YR="16";
 # rename -v "s/Glenn\ Beck\ -\ Nov\ /${YR}11/" *.mp3 | grep "20${YR}"
 # rename -v "s/Glenn\ Beck\ -\ Dec\ /${YR}12/" *.mp3 | grep "20${YR}"
 
-echo "Remember to use 'bash' and not 'sh' for this script!!!"
+# echo "Remember to use 'bash' and not 'sh' for this script!!!"
 monthArray=( "Jan" "Feb" "Mar" "Apr" "May" "Jun" "Jul" "Aug" "Sep" "Oct" "Nov" "Dec");
 
 for i in ${!monthArray[@]}

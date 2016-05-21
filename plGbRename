@@ -1,20 +1,35 @@
 #!/bin/bash
 YR="16"
-rename -v "s/\ /_/g" *20$YR*.m3u
-rename -v "s/playlist_Glenn_Beck_-_Jan_/pl_gb_${YR}01/" *_20$YR*.m3u
-rename -v "s/playlist_Glenn_Beck_-_Feb_/pl_gb_${YR}02/" *_20$YR*.m3u
-rename -v "s/playlist_Glenn_Beck_-_Mar_/pl_gb_${YR}03/" *_20$YR*.m3u
-rename -v "s/playlist_Glenn_Beck_-_Apr_/pl_gb_${YR}04/" *_20$YR*.m3u
-rename -v "s/playlist_Glenn_Beck_-_May_/pl_gb_${YR}05/" *_20$YR*.m3u
-rename -v "s/playlist_Glenn_Beck_-_Jun_/pl_gb_${YR}06/" *_20$YR*.m3u
-rename -v "s/playlist_Glenn_Beck_-_Jul_/pl_gb_${YR}07/" *_20$YR*.m3u
-rename -v "s/playlist_Glenn_Beck_-_Aug_/pl_gb_${YR}08/" *_20$YR*.m3u
-rename -v "s/playlist_Glenn_Beck_-_Sep_/pl_gb_${YR}09/" *_20$YR*.m3u
-rename -v "s/playlist_Glenn_Beck_-_Oct_/pl_gb_${YR}10/" *_20$YR*.m3u
-rename -v "s/playlist_Glenn_Beck_-_Nov_/pl_gb_${YR}11/" *_20$YR*.m3u
-rename -v "s/playlist_Glenn_Beck_-_Dec_/pl_gb_${YR}12/" *_20$YR*.m3u
 
+# replace spaces with underscores
+rename -v "s/\ /_/g" *20$YR*.m3u
+
+#rename -v "s/playlist_Glenn_Beck_-_Jan_/pl_gb_${YR}01/" *_20$YR*.m3u
+#rename -v "s/playlist_Glenn_Beck_-_Feb_/pl_gb_${YR}02/" *_20$YR*.m3u
+#rename -v "s/playlist_Glenn_Beck_-_Mar_/pl_gb_${YR}03/" *_20$YR*.m3u
+#rename -v "s/playlist_Glenn_Beck_-_Apr_/pl_gb_${YR}04/" *_20$YR*.m3u
+#rename -v "s/playlist_Glenn_Beck_-_May_/pl_gb_${YR}05/" *_20$YR*.m3u
+#rename -v "s/playlist_Glenn_Beck_-_Jun_/pl_gb_${YR}06/" *_20$YR*.m3u
+#rename -v "s/playlist_Glenn_Beck_-_Jul_/pl_gb_${YR}07/" *_20$YR*.m3u
+#rename -v "s/playlist_Glenn_Beck_-_Aug_/pl_gb_${YR}08/" *_20$YR*.m3u
+#rename -v "s/playlist_Glenn_Beck_-_Sep_/pl_gb_${YR}09/" *_20$YR*.m3u
+#rename -v "s/playlist_Glenn_Beck_-_Oct_/pl_gb_${YR}10/" *_20$YR*.m3u
+#rename -v "s/playlist_Glenn_Beck_-_Nov_/pl_gb_${YR}11/" *_20$YR*.m3u
+#rename -v "s/playlist_Glenn_Beck_-_Dec_/pl_gb_${YR}12/" *_20$YR*.m3u
+
+monthArray=( "Jan" "Feb" "Mar" "Apr" "May" "Jun" "Jul" "Aug" "Sep" "Oct" "Nov" "Dec");
+for i in ${!monthArray[@]}
+do
+	# echo ${i}
+	month=$(printf "%02d" $((i+1)))
+
+	rename -v "s/playlist_Glenn_Beck_-_${monthArray[i]}_/pl_gb_${YR}${month}/" *_20$YR*.m3u
+done
+
+# removes comma
 rename -v "s/,//" *_20$YR*.m3u
+
+# takes year off end
 rename -v "s/_20${YR}//" *_20$YR*.m3u
 
 #find . -maxdepth 1 -type f -regex '.*2015.*mp3'
